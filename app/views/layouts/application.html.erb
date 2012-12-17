@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SketchMerge</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container">
+     <div class="masthead">
+	        <ul class="nav nav-pills pull-right">
+	          <li class="active"><a href="#">Home</a></li>
+	          <li><a href="#"></a></li>
+	        </ul>
+	        <h3 class="muted">SketchMerge</h3>
+	</div>
+    <hr>
+	<%= yield %>
+	
+</div>
+
+</body>
+</html>
