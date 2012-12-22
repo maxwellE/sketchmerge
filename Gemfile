@@ -8,7 +8,13 @@ gem 'anjlab-bootstrap-rails', '>= 2.2', :require => 'bootstrap-rails'
 
 gem 'pg'
 gem 'devise'
-
+gem 'capybara', '~> 1.1.0'
+gem 'poltergeist'
+gem "factory_girl_rails", "~> 4.0"
+group :development do
+  gem 'pry'
+  gem 'launchy'
+end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -22,7 +28,9 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+group :test do
+  gem 'database_cleaner'
+end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

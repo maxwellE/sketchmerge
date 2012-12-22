@@ -8,17 +8,9 @@
 </head>
 <body>
 <div class="container">
-     <div class="masthead">
-	        <ul class="nav nav-pills pull-right">
-	          <li class="active"><a href="#">Home</a></li>
-	          <li><a href="#"></a></li>
-	        </ul>
-	        <h3 class="muted">SketchMerge</h3>
-	</div>
-    <hr>
+    <%= render "layouts/navigation" %>
+    <%= render "layouts/messages" %>
 	<%= yield %>
-	
 </div>
-
 </body>
 </html>
