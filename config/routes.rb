@@ -1,8 +1,9 @@
 SketchMerge::Application.routes.draw do
+  get "home/index"
   devise_for :users
   match '/dashboard' => "home#dashboard", :as => :user_root
   
-  get "home/index"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

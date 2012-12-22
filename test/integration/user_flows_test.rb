@@ -16,7 +16,6 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     assert !page.has_content?('Sign in'),"not on signin page"
     assert(page.has_content?("Your `Sketch"),"should have sketch")
     assert(page.has_content?("Your Merges"),"should have merges")
-    assert(page.has_content?("Your Merges"),"should have merges")
     assert(page.has_content?("Logout"),"no logout button")    
     assert(page.has_content?("Edit Profile"), 'no edit profile button')    
   end

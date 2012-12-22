@@ -11,6 +11,9 @@ gem 'devise'
 gem 'capybara', '~> 1.1.0'
 gem 'poltergeist'
 gem "factory_girl_rails", "~> 4.0"
+gem 'active_link_to'
+gem 'fullcalendar-rails'
+
 group :development do
   gem 'pry'
   gem 'launchy'
@@ -25,6 +28,7 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'jquery-ui-rails'
 end
 
 gem 'jquery-rails'

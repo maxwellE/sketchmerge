@@ -14,3 +14,12 @@
 //= require jquery_ujs
 //= require_tree .
 //= require twitter/bootstrap
+
+$(document).ready(function() {
+
+    $('div#sketch').fullCalendar({
+        // your options here
+        defaultView: 'agendaWeek'
+    });
+
+});
