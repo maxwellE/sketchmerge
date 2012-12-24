@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121222041531) do
+ActiveRecord::Schema.define(:version => 20121223143905) do
+
+  create_table "events", :force => true do |t|
+    t.integer  "user_id"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.integer  "day_index"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -27,7 +36,6 @@ ActiveRecord::Schema.define(:version => 20121222041531) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "username"
-    t.text     "schedule"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

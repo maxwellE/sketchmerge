@@ -1,0 +1,32 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+$ ->
+    calendar = $('div#sketch').fullCalendar
+      defaultView: 'agendaWeek'
+      header: false
+      height: 500
+      cache: false
+      allDaySlot: false
+      axisFormat: 'h(:mm) TT'
+      defaultEventMinutes: 60
+      columnFormat: 'dddd'
+      selectable: true
+      editable: true
+      selectHelper: true
+      events:
+          url: '/events/grab_events.json'
+          type: 'GET'
+      dayClick: (date, allDay, jsEvent, view) ->
+        title = 'Avalible'
+        calendar.fullCalendar('renderEvent',
+          title: title
+          start: date
+          end: date+30,
+          id : calendar.fullCalendar('clientEvents').length + 1)
+        true
+        calendar.fullCalendar('unselect')
+        eventResize: (event, dayDelta, minuteDelta, revertFunc) ->
+          console.log(minuteDelta)
+    console.log(calendar.fullCalendar('clientEvents'))
+
