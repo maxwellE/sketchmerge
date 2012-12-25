@@ -12,8 +12,7 @@ gem 'capybara', '~> 1.1.0'
 gem 'poltergeist'
 gem "factory_girl_rails", "~> 4.0"
 gem 'active_link_to'
-gem 'fullcalendar-rails'
-
+gem 'chronic'
 group :development do
   gem 'pry'
   gem 'launchy'

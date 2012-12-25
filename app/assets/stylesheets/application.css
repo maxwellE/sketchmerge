@@ -11,5 +11,11 @@
  *= require_self
  *= require_tree .
  *= require twitter/bootstrap
- *= require jquery.ui.all
+ *= require jquery.calendar
  */
+ #calendar{
+     position: relative;
+     box-sizing:border-box;
+     border: 1px solid #bbb;
+     height:500px;
+ }
