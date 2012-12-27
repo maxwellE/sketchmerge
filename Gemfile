@@ -13,6 +13,8 @@ gem 'poltergeist'
 gem "factory_girl_rails", "~> 4.0"
 gem 'active_link_to'
 gem 'chronic'
+gem 'jbuilder'
+gem 'gon'
 group :development do
   gem 'pry'
   gem 'launchy'

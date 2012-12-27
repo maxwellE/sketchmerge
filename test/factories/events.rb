@@ -3,8 +3,7 @@
 FactoryGirl.define do
   factory :event do
     user_id 1
-    start_time "2012-12-23 09:39:05"
-    end_time "2012-12-23 11:39:05"
-    day_index 1
+    start_time Chronic.parse('Sunday December 9th 6 AM')
+    end_time Chronic.parse('Sunday December 9th 6:30 AM')
   end
 end

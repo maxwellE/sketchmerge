@@ -1,12 +1,9 @@
 SketchMerge::Application.routes.draw do
-  get "events/grab_events"
-
   get "home/index"
   devise_for :users
   match '/dashboard' => "home#dashboard", :as => :user_root
+  match '/events/resize_event' => 'events#resize_event'
   
-
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

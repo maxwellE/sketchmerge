@@ -54,7 +54,7 @@
 		// Default height and widths.
 		minwidth		: 130,
 		minheight		: null,
-		overlapoffset	: 15,
+		overlapoffset	: 0,
 		
 		// Start and end times for the days
 		daytimestart	: '00:00:00',
@@ -96,10 +96,10 @@
 		
 		// day events
 		dayclick		: $.noop,
-		daydblclick		: $.noop,
+		daydblclick		: $.noop ,
 		
 		// Other events.
-		onload			: $.noop
+		onload: $.noop
 	};
 	
 	var _private = {

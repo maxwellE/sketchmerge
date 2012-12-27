@@ -3,8 +3,30 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
+    eventResizer = (str, obj, collect) ->
+      $.post '/events/resize_event',
+        event_id : obj.uid
+        new_start_time : obj.begins
+        new_end_time : obj.ends
     $('#calendar').cal(
-        startdate     : '2012-12-23'
+        startdate     : gon.start_date
         daystodisplay : 7
-        gridincrement: '30 mins'
+        maskeventlabel : 'g:i A'
+        gridincrement: '15 mins'
+        events : gon.jbuilder
+        allowresize :true
+        allowmove :true
+        allowselect: false
+        minwidth: 20
+        eventresize : eventResizer
+        eventmove: eventResizer
+        onload: () ->
+          $('div.ui-cal-time').click (e)->
+          #    $('div.ui-cal-wrapper').append 
     )
+    
+
+
+
+    
+
