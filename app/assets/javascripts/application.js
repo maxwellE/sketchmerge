@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.calendar
+//= require jstz-1.0.4.min.js
 //= require_tree .
 //= require twitter/bootstrap

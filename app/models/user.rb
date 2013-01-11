@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   has_many :events
+  has_many :merges
   validates_presence_of :username
   validates_uniqueness_of :username
   devise :database_authenticatable, :registerable,
