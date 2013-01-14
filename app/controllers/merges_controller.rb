@@ -3,7 +3,8 @@ class MergesController < ApplicationController
   def create
     if params[:to_username] != current_user.username
       if User.exists?(:username => params[:to_username])
-        if current_user.merges.exists?(:receiver_id => User.where("username = ?",params[:to_username]))
+        if current_user.merges.exists?(:receiver_id => User.where("username = ?",params[:to_username])) or
+            User.where("username = ?",params[:to_username]).first.merges.exists?(:receiver_id => current_user.id)
           render :json => {:error => "You already have merged with '#{params[:to_username]}'!"}
         else
           new_merge = current_user.merges.create(:receiver_id => User.where("username = ?",params[:to_username]).first.id)
