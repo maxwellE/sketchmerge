@@ -4,6 +4,21 @@
 	
 </div>
 <h1 class="lead">Your Merges</h1>
-<hr>
 <div id="merges">
+  <table class="table table-hover" id="merge_table">
+	<tr>
+		<th><i class="icon-ok"></i></th><th>Username</th><th>Actions</th>
+	</tr>
+    <%= render :partial => "merge", :locals => {:merges => @merges}%>
+  </table>
+  <div id="warning_zone">
+  </div>
+  <div class="input-append" id="add_user_div">
+    <input class="span2" id="username_search" type="text">
+    <button class="btn" id="add_user_button" type="button">Add User</button>
+  </div>
+</div>
+<h1 class="lead">Your Possible Times</h1>
+<hr>
+<div class="possible_times">
 </div>

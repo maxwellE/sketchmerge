@@ -7,6 +7,8 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
   setup do
     Capybara.javascript_driver = :poltergeist
     @user = FactoryGirl.create(:user)
+    @user2 = FactoryGirl.create(:user2)
+    @merge = FactoryGirl.create(:merge)
     visit(root_path)
     click_on('Sign In')
     fill_in('Email', :with => @user.email)
@@ -20,5 +22,9 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Your Merges"),"should have merges")
     assert(page.has_content?("Logout"),"no logout button")    
     assert(page.has_content?("Edit Profile"), 'no edit profile button')    
+  end
+  test "should see pending merges" do
+    assert(page.has_content?('Pending Merges'), "should see pending merges header")
+    assert(page.has_content?('Maxemus52'), "should see pending merge username")
   end
 end
