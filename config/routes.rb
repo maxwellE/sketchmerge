@@ -6,7 +6,7 @@ SketchMerge::Application.routes.draw do
   post '/events/create' ,:to => 'events#create'
   post '/events/destroy', :to => 'events#destroy'
   post '/merges/create', :to => 'merges#create'
-
+  get  '/merges/find_time'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

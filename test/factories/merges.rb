@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :merge do
-    pending false
     user_id 2
     receiver_id 1
   end

@@ -24,7 +24,6 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Edit Profile"), 'no edit profile button')    
   end
   test "should see pending merges" do
-    assert(page.has_content?('Pending Merges'), "should see pending merges header")
-    assert(page.has_content?('Maxemus52'), "should see pending merge username")
+    assert(page.has_content?('Maxemus52'), "should see merge username")
   end
 end

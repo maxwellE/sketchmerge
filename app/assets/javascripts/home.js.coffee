@@ -4,7 +4,26 @@
 
 $ ->
     $(".ajax_checkbox").click ->
-      console.log "Clicked Checkbox"
+      merging_users = []
+      for box in $(".ajax_checkbox")
+          if box.checked
+              merging_users.push box.dataset.receiver
+      if merging_users.length
+        $("#times_alert").remove()
+        $.get '/merges/find_time',
+          to_users: merging_users
+          (times)->
+            console.log "IN RESPONSE"
+            console.log times
+      else
+        $("#possible_times").html(
+          """
+          <div class="alert" id="times_alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error!</strong> No merges selected, no possible times exist.
+          </div>
+          """
+        )
     $("#add_user_button").click ->
       $('#search_error').remove()
       username_text = $("input#username_search").val().trim()
