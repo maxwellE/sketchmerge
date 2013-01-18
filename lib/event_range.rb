@@ -1,4 +1,3 @@
-require 'pry'
 require 'chronic'
 class EventRange  
   def self.time_ranges(times)
