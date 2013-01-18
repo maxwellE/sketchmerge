@@ -3,6 +3,32 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
+    handleTimeResponse = (result_times) ->
+        $("#possible_times").html(
+          """
+          <table class="table" id="times_table">
+              <tr><th>Day of the Week</th><th>Availability</th></tr>
+          </table>
+          """
+        )
+        handleDay("Sunday",result_times)
+        handleDay("Monday",result_times)
+        handleDay("Tuesday",result_times)
+        handleDay("Wednesday",result_times)
+        handleDay("Thursday",result_times)
+        handleDay("Friday",result_times)
+        handleDay("Saturday",result_times)
+    handleDay = (day_name,result_times) ->
+        if result_times[day_name]?
+          for day in result_times[day_name]
+              $("#times_table").append(
+                """
+                  <tr>
+                    <td>#{day_name}</td>
+                    <td>#{day[0]} <i class="icon-chevron-right"></i> #{day[1]}</td>
+                  </tr>
+                """
+              )
     $(".ajax_checkbox").click ->
       merging_users = []
       for box in $(".ajax_checkbox")
@@ -13,8 +39,17 @@ $ ->
         $.get '/merges/find_time',
           to_users: merging_users
           (times)->
-            console.log "IN RESPONSE"
-            console.log times
+              if times.error?
+                $("#possible_times").html(
+                  """
+                  <div class="alert" id="times_alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Error!</strong> #{times.error}
+                  </div>
+                  """
+                )
+              else
+                handleTimeResponse(times)
       else
         $("#possible_times").html(
           """
@@ -32,7 +67,6 @@ $ ->
           to_username: username_text
           (response) ->
             if response.error
-              console.log "ERROR"
               $("#warning_zone").html(
                 """
                 <div class="alert" id="search_error">
@@ -54,6 +88,7 @@ $ ->
     tz = jstz.determine()
     timeZone = tz.name()
     eventResizer = (str, obj, collect) ->
+      uncheckBoxes()
       $.post '/events/update',
         event_id : obj.uid
         new_start_time : obj.begins
@@ -64,6 +99,7 @@ $ ->
         error: ->
             return false
     eventDestroy = (str,obj,collect) ->
+      uncheckBoxes()
       $.post '/events/destroy',
            event_id : obj.uid
            success: ->
@@ -86,6 +122,7 @@ $ ->
         eventremove: eventDestroy
         onload: ->
             $('div.ui-cal-time').click (e) ->
+              uncheckBoxes()
               click_time = $(@).attr "time"
               click_date = @.parentElement.getAttribute "date"
               if click_time == "23:45:00"
@@ -98,6 +135,19 @@ $ ->
                 timezone : timeZone
                 (data)->
                   $('#calendar').cal('add',{begins: "#{click_date} #{click_time}", 
-                  ends:"#{click_date} #{next_time}", uid: data.uid,color:"blue",notes:"Avaliable"})
+                  ends:"#{click_date} #{next_time}", uid: data.uid,color:"blue",notes:"Available"})
     )
     $('#calendar').disableSelection();
+    $('h1').disableSelection();
+    uncheckBoxes = ()->
+        for box in $(".ajax_checkbox")
+          box.checked = false
+        $("#possible_times").html(
+          """
+          <div class="alert" id="times_alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error!</strong> No merges selected, no possible times exist.
+          </div>
+          """
+        )
+        true

@@ -4,6 +4,7 @@ class MergesController < ApplicationController
     render :json => Merge.generate_create_json(current_user,params)
   end
   def find_time
-    render :json => Merge.find_possible_times(current_user,params[:to_users])
+    Rails.logger.debug { params[:to_users] }
+    render :json => current_user.merge_with_other_users(params[:to_users].map{|x| User.find_by_username(x)})
   end
 end

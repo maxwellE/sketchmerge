@@ -1,3 +1,4 @@
+require "event_range"
 class Event < ActiveRecord::Base
   attr_accessible :day_index, :end_time, :start_time, :user_id
   belongs_to :user
@@ -11,6 +12,10 @@ class Event < ActiveRecord::Base
     times
   end
   def self.construct_ranges(time_hash)
-    
+    day_ranges ={}
+    time_hash.each_pair do |day,times|
+      day_ranges[day] = EventRange.time_ranges(times)
+    end
+    day_ranges
   end
 end

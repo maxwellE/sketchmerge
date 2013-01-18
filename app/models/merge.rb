@@ -23,7 +23,4 @@ class Merge < ActiveRecord::Base
       {:error => "You cannot add yourself as a merger!"}
     end
   end
-
-  def self.find_possible_times(current_user,users)
-  end
 end

@@ -21,4 +21,15 @@ class User < ActiveRecord::Base
     end
     result
   end
+  def merge_with_other_users(user_list)
+    all_times = consolidate_events
+    return {:error => "You have no available times! No one can meet with you! Edit the calendar to mark you availability and try again."} if all_times.empty?
+    user_list.each do |user|
+      all_times = all_times & user.consolidate_events
+      if all_times.empty?
+        return {:error => "No possible meeting times exists with '#{user_list.map{|x| x.username}.join(',')}'. Try removing a user to continue."}
+      end
+    end
+    Event.construct_ranges(all_times.group_by{|x| x.split.first})
+  end
 end
