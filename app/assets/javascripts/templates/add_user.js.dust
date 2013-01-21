@@ -1,0 +1,5 @@
+<tr>
+	<td><input type="checkbox" class="ajax_checkbox" name="merge" data-receiver="{username}"></td>
+    <td>{username}</td>
+    <td><!--<input type=""!--></td>
+</tr>

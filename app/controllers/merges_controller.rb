@@ -1,7 +1,7 @@
 class MergesController < ApplicationController
   before_filter :authenticate_user!
   def create
-    render :json => Merge.generate_create_json(current_user,h(params[:to_username]))
+    render :json => Merge.generate_create_json(current_user,params[:to_username])
   end
   def find_time
     Rails.logger.debug { params[:to_users] }

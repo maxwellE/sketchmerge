@@ -40,25 +40,17 @@ $ ->
           to_users: merging_users
           (times)->
               if times.error?
-                $("#possible_times").html(
-                  """
-                  <div class="alert" id="times_alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Error!</strong> #{times.error}
-                  </div>
-                  """
-                )
+                dust.render "merge_choice_error",
+                  message: times.error
+                  (err,out) ->
+                    $("#possible_times").html(out)
               else
                 handleTimeResponse(times)
       else
-        $("#possible_times").html(
-          """
-          <div class="alert" id="times_alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Error!</strong> No merges selected, no possible times exist.
-          </div>
-          """
-        )
+        dust.render "merge_choice_error",
+          message: "No merges selected, no possible times exist."
+          (err,out) ->
+              $("#possible_times").html(out)
     $("#add_user_button").click ->
       $('#search_error').remove()
       username_text = $("input#username_search").val().trim()
@@ -67,24 +59,15 @@ $ ->
           to_username: username_text
           (response) ->
             if response.error
-              $("#warning_zone").html(
-                """
-                <div class="alert" id="search_error">
-                  <button type="button" class="close" data-dismiss="alert">&times;</button>
-                  <strong>Error!</strong> #{response.error}
-                </div>
-                """
-              )
+              dust.render "add_user_error",
+                error: response.error
+                (err, out) ->
+                  $("#warning_zone").html(out)
             else
-              $("#merge_table").append(
-                """
-                    <tr>
-                		<td><input type="checkbox" class="ajax_checkbox" name="merge" data-receiver="#{response.to_username}"></td>
-                        <td>#{response.to_username}</td>
-                        <td></td>
-                  	</tr>
-                """
-              )
+              dust.render "add_user",
+                username: response.to_username
+                (err, out) ->
+                  $("#merge_table").append(out)
     tz = jstz.determine()
     timeZone = tz.name()
     eventResizer = (str, obj, collect) ->
@@ -142,12 +125,7 @@ $ ->
     uncheckBoxes = ()->
         for box in $(".ajax_checkbox")
           box.checked = false
-        $("#possible_times").html(
-          """
-          <div class="alert" id="times_alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Error!</strong> No merges selected, no possible times exist.
-          </div>
-          """
-        )
-        true
+        dust.render "merge_choice_error",
+          message: "No merges selected, no possible times exist."
+          (err,out) ->
+            $("#possible_times").html(out)

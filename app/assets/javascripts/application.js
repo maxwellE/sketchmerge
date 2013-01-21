@@ -11,11 +11,13 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require dust-core
 //= require jquery_ujs
 //= require jquery.calendar
 //= require jstz-1.0.4.min.js
 //= require_tree .
 //= require twitter/bootstrap
+//= require_tree ./templates
 jQuery.fn.extend({ 
         disableSelection : function() { 
                 return this.each(function() { 

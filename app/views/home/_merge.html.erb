@@ -1,14 +1,13 @@
 <%merges.each do |merge|%>
     <tr>
-
         <% if merge.user == current_user %>
              <td><input type="checkbox" class="ajax_checkbox" name="merge"data-receiver="<%=merge.receiver.username%>"></td>
              <td><%=merge.receiver.username%></td>
-          <td></td>
+          <td><!--<input type=""!--></td>
            <%else%>
           <td><input type="checkbox" class="ajax_checkbox" name="merge" data-receiver="<%=merge.user.username%>"></td>
           <td><%=merge.user.username%></td>
-          <td></td>
+          <td><!--<input type=""!--></td>
         <%end %>
   	</tr>
 <% end %>

@@ -61,6 +61,10 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
+    dust-rails (0.4.0)
+      execjs
+      rails (> 3.1.0)
+      tilt
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (1.4.0)
@@ -193,6 +197,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   database_cleaner
   devise
+  dust-rails
   factory_girl_rails (~> 4.0)
   gon
   jbuilder
