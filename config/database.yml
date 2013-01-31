@@ -44,4 +44,3 @@ test:
   database: SketchMerge_test
   pool: 5
   host: localhost
-  

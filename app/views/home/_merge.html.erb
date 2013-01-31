@@ -3,11 +3,11 @@
         <% if merge.user == current_user %>
              <td><input type="checkbox" class="ajax_checkbox" name="merge"data-receiver="<%=merge.receiver.username%>"></td>
              <td><%=merge.receiver.username%></td>
-          <td><!--<input type=""!--></td>
+          <td><button type="button" class="btn btn-danger merge_delete" data-merge="<%=merge.id%>">Delete</button></td>
            <%else%>
           <td><input type="checkbox" class="ajax_checkbox" name="merge" data-receiver="<%=merge.user.username%>"></td>
           <td><%=merge.user.username%></td>
-          <td><!--<input type=""!--></td>
+          <td><button type="button" class="btn btn-danger merge_delete" data-merge="<%=merge.id%>>Delete</button></td>
         <%end %>
   	</tr>
 <% end %>

@@ -1,4 +1,4 @@
-<div class="alert" id="search_error">
+<div class="alert fade in" id="search_error">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Error!</strong> {error}
 </div>
