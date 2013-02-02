@@ -81,13 +81,10 @@ $ ->
               (err, out) ->
                 $("#warning_zone").html(out)
           else
-            dust.render "add_user",
-              username: response.to_username
-              merge_id: response.merge_id
-              (err, out) ->
-                $("#merge_table").append(out)
-  tz = jstz.determine()
-  timeZone = tz.name()
+            $("#merge_table").append(JST['templates/add_user'] 
+              username: response.to_username 
+              merge_id: response.merge_id)
+
   eventResizer = (str, obj, collect) ->
     uncheckBoxes()
     $.post '/events/update',
