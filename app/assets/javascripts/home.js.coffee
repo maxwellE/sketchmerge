@@ -1,5 +1,4 @@
 $ ->
-  uncheckBoxes
   $(".alert").alert()
   $(document).on 'click',".merge_delete", ->
     clicked_element = $(@)
@@ -76,10 +75,9 @@ $ ->
         to_username: username_text
         (response) ->
           if response.error
-            dust.render "add_user_error",
-              error: response.error
-              (err, out) ->
-                $("#warning_zone").html(out)
+            $("#warning_zone").html(
+              JST["templates/add_user_error"]
+                error: response.error)
           else
             $("#merge_table").append(JST['templates/add_user'] 
               username: response.to_username 
@@ -91,7 +89,6 @@ $ ->
       event_id : obj.uid
       new_start_time : obj.begins
       new_end_time : obj.ends
-      timezone : timeZone
       success: ->
         return true
       error: ->
@@ -119,7 +116,7 @@ $ ->
     eventmove: eventResizer
     eventremove: eventDestroy
     onload: ->
-      $('div.ui-cal-time').click (e) ->
+      $(document).on 'click','div.ui-cal-time', ->
         uncheckBoxes()
         click_time = $(@).attr "time"
         click_date = @.parentElement.getAttribute "date"
@@ -130,7 +127,6 @@ $ ->
         $.post '/events/create',
           eventTime : click_time
           eventDate : click_date
-          timezone : timeZone
           (data)->
             $('#calendar').cal('add',
                begins: "#{click_date} #{click_time}",
@@ -142,7 +138,6 @@ $ ->
   uncheckBoxes = ()->
     for box in $(".ajax_checkbox")
       box.checked = false
-    dust.render "merge_choice_error",
-      message: "No merges selected, no possible times exist."
-      (err,out) ->
-        $("#possible_times").html(out)
+    $("#possible_times").html(
+      JST["templates/merge_choice_error"]
+        message: "No merges selected, no possible times exist.")
