@@ -1,6 +1,7 @@
 $ ->
+  uncheckBoxes
   $(".alert").alert()
-  $(".merge_delete").click ->
+  $(document).on 'click',".merge_delete", ->
     clicked_element = $(@)
     merge_destroy = $.post '/merges/destroy',
       merge_id: this.dataset.merge
@@ -45,7 +46,7 @@ $ ->
             </tr>
           """
         )
-  $(".ajax_checkbox").click ->
+  $(document).on "click",".ajax_checkbox", ->
     merging_users = []
     for box in $(".ajax_checkbox")
       if box.checked
@@ -67,7 +68,7 @@ $ ->
         message: "No merges selected, no possible times exist."
         (err,out) ->
           $("#possible_times").html(out)
-  $("#add_user_button").click ->
+  $(document).on "click","#add_user_button", ->
     $('#search_error').remove()
     username_text = $("input#username_search").val().trim()
     unless username_text  == ""
@@ -82,6 +83,7 @@ $ ->
           else
             dust.render "add_user",
               username: response.to_username
+              merge_id: response.merge_id
               (err, out) ->
                 $("#merge_table").append(out)
   tz = jstz.determine()

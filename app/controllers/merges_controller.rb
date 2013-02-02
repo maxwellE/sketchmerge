@@ -5,7 +5,10 @@ class MergesController < ApplicationController
   end
 
   def destroy
-    Rails.logger.debug { params.inspect }
+    merge = Merge.find(params[:merge_id].to_i)
+    if merge
+      merge.delete
+    end
     render :json => {success:true} 
   end
 

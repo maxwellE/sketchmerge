@@ -6,6 +6,10 @@
     <%= active_link_to "Edit Profile", edit_user_registration_path,:wrap_tag => :li%>
   </ul>
 <% end %>
-<h3 class="muted">SketchMerge</h3>
+<h3 class="muted">SketchMerge  
+	<% if current_user %>
+	<small>(Logged in as '<%=current_user.username%>')</small>
+	<% end %>
+</h3>
 </div>
 <hr>

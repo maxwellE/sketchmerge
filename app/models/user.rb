@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :username
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-
+  attr_accessor :login
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me,:username
+  attr_accessible :email, :password, :password_confirmation, :remember_me,:username,:login
   # attr_accessible :title, :body
   def consolidate_events
     result = []
@@ -31,5 +31,14 @@ class User < ActiveRecord::Base
       end
     end
     Event.construct_ranges(all_times.group_by{|x| x.split.first})
+  end
+  
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    else
+      where(conditions).first
+    end
   end
 end

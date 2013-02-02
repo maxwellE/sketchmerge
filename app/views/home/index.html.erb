@@ -1,7 +1,8 @@
 <div class="jumbotron">
         <h1 id="intro">The best way to find time to meet with your teammates,coworkers and friends.</h1>
         <p class="lead" id="leaddesc">SketchMerge is a simple utility that allows two or more people to find time to meet with one another.  A great tool for any team.</p>
-        <%= link_to "Sign Up", new_user_registration_path, :class =>"btn btn-large btn-success", :id => "signup" %>
-        <p class="lead" id="leaddesc"><b>or</b></p>
-        <%= link_to "Sign In", new_user_session_path,  :class =>"btn btn-large btn-primary", :id => "signin"%>   
+		<div style="max-width: 400px; margin: 0 auto 10px;" class="well">
+	    	<%= link_to "Sign Up", new_user_registration_path, :class =>"btn btn-large btn-block btn-success", :id => "signup" %>
+		    <%= link_to "Sign In", new_user_session_path,  :class =>"btn btn-large btn-block btn-primary", :id => "signin"%>   
+		</div>
 </div>

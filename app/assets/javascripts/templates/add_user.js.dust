@@ -1,5 +1,5 @@
 <tr>
 	<td><input type="checkbox" class="ajax_checkbox" name="merge" data-receiver="{username}"></td>
     <td>{username}</td>
-    <td><!--<input type=""!--></td>
+    <td><button type="button" class="btn btn-danger merge_delete" data-merge="{merge_id}">Delete</button></td>
 </tr>
