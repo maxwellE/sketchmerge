@@ -1,10 +1,11 @@
 /**
- * jQuery calendar plug-in 1.0.1
+ * jQuery calendar plug-in 1.0.3
  * Copyright 2012, Digital Fusion
  * Licensed under the MIT license.
- * http://teamdf.com/jquery-plugins/license/
+ * http://opensource.teamdf.com/license/
  *
  * @author Sam Sehnert | sam@teamdf.com
+ * @docs http://opensource.teamdf.com/calendar/docs/ 
  * 
  * Implement an extremely flexible calendar interface with minimal up front development.
  */
@@ -15,7 +16,7 @@
 	// The name of your plugin. This is used to namespace your
 	// plugin methods, object data, and registerd events.
 	var plugin_name		= 'cal';
-	var plugin_version	= '1.0.1';
+	var plugin_version	= '1.0.2';
 	
 	var const_month		= 'month';
 	var const_week		= 'week';
@@ -40,10 +41,12 @@
 		invalidcolor	: '#888888',
 		
 		// Date Masks
-		maskmonthlabel	: 'l',
-		maskeventlabel	: 'g:i A',
-		maskdatelabel	: 'D, jS',
-		masktimelabel	: {
+		maskmonthlabel			: 'l',
+		maskeventlabel			: 'g:i A',
+		maskeventlabeldelimiter : '', // &ndash;
+		maskeventlabelend 		: '', // g:i A
+		maskdatelabel			: 'D, jS',
+		masktimelabel			: {
 			'00'	: 'g:i <\\sp\\a\\n>A<\/\\sp\\a\\n>',
 			'noon'	: '\\N\\O\\O\\N'
 		},
@@ -54,7 +57,7 @@
 		// Default height and widths.
 		minwidth		: 130,
 		minheight		: null,
-		overlapoffset	: 0,
+		overlapoffset	: 15,
 		
 		// Start and end times for the days
 		daytimestart	: '00:00:00',
@@ -96,10 +99,10 @@
 		
 		// day events
 		dayclick		: $.noop,
-		daydblclick		: $.noop ,
+		daydblclick		: $.noop,
 		
 		// Other events.
-		onload: $.noop
+		onload			: $.noop
 	};
 	
 	var _private = {
@@ -613,7 +616,13 @@
 					
 					// Set the new value into the event data.
 					$events.find('pre.details').text( values.notes );
-					$events.find('p.title').text( values.title || values.begins.format(data.settings.maskeventlabel) );
+					$events.find('p.title').text( 
+						values.title || ( values.begins.format(data.settings.maskeventlabel) + 
+							(
+								data.settings.maskeventlabelend !== '' ? data.settings.maskeventlabeldelimiter + values.ends.format( data.settings.maskeventlabelend ) : ''
+							)
+						)
+					);
 															
 					// Save the new values to the element.
 					$events.data(plugin_name,values);
@@ -1497,7 +1506,13 @@
 						// Add the text straight to the event details.
 						$event.attr('data-id',values.uid);
 						$event.find('pre.details').text( values.notes );
-						$event.find('p.title').text( values.title || values.begins.format(data.settings.maskeventlabel) );
+						$event.find('p.title').text( values.title || ( values.begins.format(data.settings.maskeventlabel) + 
+								(
+									data.settings.maskeventlabelend !== '' ? data.settings.maskeventlabeldelimiter + values.ends.format( data.settings.maskeventlabelend ) : ''
+								)
+							)
+						 );
+						
 						
 						// Start the events collection small with this element.
 						$events = $event;
@@ -1620,7 +1635,7 @@
 							}
 							
 							// Set the appointment time while dragging.
-							if( !values.title ) $event.find('p.title').text( values.begins.format(data.settings.maskeventlabel) );
+							if( !values.title ) $event.find('p.title').text( values.begins.format(data.settings.maskeventlabel) + ( data.settings.maskeventlabelend !== '' ? data.settings.maskeventlabeldelimiter + values.ends.format( data.settings.maskeventlabelend ) : '' ) );
 							
 							// Choose whether to animate or not.
 							if( !speed ){
@@ -1765,7 +1780,11 @@
 						$event.find('p.resize-top, p.resize-bottom').hide();
 						$event.attr('data-id',values.uid);
 						$event.find('pre.details').text( values.notes );
-						$event.find('p.title').text( '● ' + ( values.title || values.begins.format(data.settings.maskeventlabel) ) );
+						$event.find('p.title').text( '● ' + ( values.title || ( values.begins.format(data.settings.maskeventlabel) + 
+							(
+								data.settings.maskeventlabelend !== '' ? data.settings.maskeventlabeldelimiter + values.ends.format( data.settings.maskeventlabelend ) : ''
+							)
+						) ) );
 						$event.attr('title',values.notes||'').unbind('dblclick.'+plugin_name).bind('dblclick.'+plugin_name,_private.event.edit);
 						
 						// Start the events collection small with this element.

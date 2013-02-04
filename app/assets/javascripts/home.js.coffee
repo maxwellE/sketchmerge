@@ -1,5 +1,8 @@
 $ ->
+  # Bootstrap alert call
   $(".alert").alert()
+  
+  # Ajax destroy a merge
   $(document).on 'click',".merge_delete", ->
     clicked_element = $(@)
     merge_destroy = $.post '/merges/destroy',
@@ -18,7 +21,8 @@ $ ->
         clicked_element.popover("hide")
         clicked_element.removeClass("disabled")
       setTimeout hide_popover_and_enable_button,4000
-
+  
+  # render all times
   handleTimeResponse = (result_times) ->
     $("#possible_times").html(
         """
@@ -34,6 +38,8 @@ $ ->
       handleDay("Thursday",result_times)
       handleDay("Friday",result_times)
       handleDay("Saturday",result_times)
+  
+  # Render a single day's times
   handleDay = (day_name,result_times) ->
     if result_times[day_name]?
       for day in result_times[day_name]
@@ -45,6 +51,7 @@ $ ->
             </tr>
           """
         )
+  # Ajax merge selection
   $(document).on "click",".ajax_checkbox", ->
     merging_users = []
     for box in $(".ajax_checkbox")
@@ -67,6 +74,8 @@ $ ->
         message: "No merges selected, no possible times exist."
         (err,out) ->
           $("#possible_times").html(out)
+          
+  # Ajax merge add
   $(document).on "click","#add_user_button", ->
     $('#search_error').remove()
     username_text = $("input#username_search").val().trim()
@@ -83,6 +92,7 @@ $ ->
               username: response.to_username 
               merge_id: response.merge_id)
 
+  # Calendar event callback handlers
   eventResizer = (str, obj, collect) ->
     uncheckBoxes()
     $.post '/events/update',
@@ -101,10 +111,14 @@ $ ->
            return true
          error: ->
            return false
+           
+  # calendar setup
   calendar = $('#calendar').cal(
     startdate     : gon.start_date
     daystodisplay : 7
     maskeventlabel : 'g:i A'
+    maskeventlabeldelimiter:'-'
+    maskeventlabelend :'g:i A'
     gridincrement: '15 mins'
     events : gon.jbuilder
     allowresize :true
@@ -133,8 +147,12 @@ $ ->
                ends:"#{click_date} #{next_time}",
                uid: data.uid,color:"blue",notes:"Available")
   )
+  
+  #prevent selection during drag
   $('#calendar').disableSelection()
   $('h1').disableSelection()
+  
+  # Uncheck all merge boxes
   uncheckBoxes = ()->
     for box in $(".ajax_checkbox")
       box.checked = false
