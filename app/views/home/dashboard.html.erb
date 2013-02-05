@@ -7,7 +7,7 @@
 	
 </div>
 <h1 class="lead">Your Merges</h1>
-<% if current_user.merges.count == 0 %>
+<% unless Merge.exists?(:receiver_id => current_user.id) || Merge.exists?(:user_id =>current_user.id) %>
   <%= render "info_merge"%>
 <% end %>
 <div id="merges">

@@ -57,24 +57,22 @@ $ ->
     for box in $(".ajax_checkbox")
       if box.checked
         merging_users.push box.dataset.receiver
-    if merging_users.length
+    if merging_users.length > 0
       $("#times_alert").remove()
       $.get '/merges/find_time',
         to_users: merging_users
         (times)->
           if times.error?
-            dust.render "merge_choice_error",
-              message: times.error
-              (err,out) ->
-                $("#possible_times").html(out)
+            $("#possible_times").html(
+              JST["templates/merge_choice_error"]
+                message: times.error)
           else
             handleTimeResponse(times)
     else
-      dust.render "merge_choice_error",
-        message: "No merges selected, no possible times exist."
-        (err,out) ->
-          $("#possible_times").html(out)
-          
+      $("#possible_times").html(
+        JST["templates/merge_choice_error"]
+          message: "No merges selected, no possible times exist.")
+
   # Ajax merge add
   $(document).on "click","#add_user_button", ->
     $('#search_error').remove()
