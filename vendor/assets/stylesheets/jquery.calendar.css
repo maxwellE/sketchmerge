@@ -338,7 +338,7 @@ opacity: 1;
 .ui-cal .ui-cal-event p.title{
 /* style for time display in appointments */
 font-weight: bold;
-font-size: 12px;
+font-size: .8em;
 line-height: 1.6em;
 margin: 0px;
 margin-left: 3px;
