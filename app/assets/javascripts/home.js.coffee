@@ -2,25 +2,7 @@ $ ->
   # Bootstrap alert call
   $(".alert").alert()
   
-  # Ajax destroy a merge
-  $(document).on 'click',".merge_delete", ->
-    clicked_element = $(@)
-    merge_destroy = $.post '/merges/destroy',
-      merge_id: this.dataset.merge
-    merge_destroy.success (data) ->
-      clicked_element.popover("destroy")
-      clicked_element.parent().parent().fadeOut () ->
-        clicked_element.parent().parent().remove()
-    merge_destroy.success (data) ->
-      clicked_element.addClass("disabled")
-      clicked_element.popover
-        title: "Delete Error!"
-        content: "There was an issue removing this merge. Please try again soon."
-        trigger: "click"
-      hide_popover_and_enable_button = () ->
-        clicked_element.popover("hide")
-        clicked_element.removeClass("disabled")
-      setTimeout hide_popover_and_enable_button,4000
+
   
   # render all times
   handleTimeResponse = (result_times) ->
@@ -52,7 +34,7 @@ $ ->
           """
         )
   # Ajax merge selection
-  $(document).on "click",".ajax_checkbox", ->
+  merge_selection = () ->
     merging_users = []
     for box in $(".ajax_checkbox")
       if box.checked
@@ -72,6 +54,9 @@ $ ->
       $("#possible_times").html(
         JST["templates/merge_choice_error"]
           message: "No merges selected, no possible times exist.")
+    
+  $(document).on "click",".ajax_checkbox", -> merge_selection()
+
 
   # Ajax merge add
   $(document).on "click","#add_user_button", ->
@@ -89,6 +74,28 @@ $ ->
             $("#merge_table").append(JST['templates/add_user'] 
               username: response.to_username 
               merge_id: response.merge_id)
+  
+  # Ajax destroy a merge
+  $(document).on 'click',".merge_delete", ->
+    clicked_element = $(@)
+    clicked_element.parent().parent().children().first().children()[0].checked = false
+    merge_selection()
+    merge_destroy = $.post '/merges/destroy',
+      merge_id: this.dataset.merge
+    merge_destroy.success (data) ->
+      clicked_element.popover("destroy")
+      clicked_element.parent().parent().fadeOut () ->
+        clicked_element.parent().parent().remove()
+    merge_destroy.success (data) ->
+      clicked_element.addClass("disabled")
+      clicked_element.popover
+        title: "Delete Error!"
+        content: "There was an issue removing this merge. Please try again soon."
+        trigger: "click"
+      hide_popover_and_enable_button = () ->
+        clicked_element.popover("hide")
+        clicked_element.removeClass("disabled")
+      setTimeout hide_popover_and_enable_button,4000  
 
   # Calendar event callback handlers
   eventResizer = (str, obj, collect) ->
